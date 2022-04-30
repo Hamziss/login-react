@@ -1,4 +1,9 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { register, reset } from "../../features/authSlice";
+import { Spinner } from "../../components/Spinner";
 
 export const Signup = () => {
   const [formdata, setformdata] = React.useState({
@@ -8,7 +13,22 @@ export const Signup = () => {
     confirmpassword: "",
   });
   const { name, email, password, confirmpassword } = formdata;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const { user, isLoading, isError, message, isSuccess } = useSelector(
+    (state) => state.auth
+  );
+
+  React.useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess || user) {
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [user, isError, isLoading, isSuccess, message, navigate, dispatch]);
   const onChange = (e) => {
     setformdata((prevState) => ({
       ...prevState,
@@ -17,7 +37,22 @@ export const Signup = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if (password !== confirmpassword) {
+      toast.error("Passwords do not match");
+    } else {
+      const userData = {
+        name,
+        email,
+        password,
+      };
+      dispatch(register(userData));
+    }
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <>
       <h1>Create an account</h1>
