@@ -16,19 +16,14 @@ export const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, isLoading, isError, message, isSuccess } = useSelector(
-    (state) => state.auth
-  );
+  const { user, isLoading, isSuccess } = useSelector((state) => state.auth);
 
   React.useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
     if (isSuccess || user) {
       navigate("/");
     }
     dispatch(reset());
-  }, [user, isError, isLoading, isSuccess, message, navigate, dispatch]);
+  }, [user, isLoading, isSuccess, navigate, dispatch]);
   const onChange = (e) => {
     setformdata((prevState) => ({
       ...prevState,
