@@ -82,3 +82,13 @@ p.parsignup {
     position: absolute;
     left: 20px;
 }
+
+@media (max-width:768px) {
+    .wrapper {
+        flex-direction: column-reverse;
+    }
+    .logoSide,
+    .formSide {
+        width: 100%;
+    }
+}

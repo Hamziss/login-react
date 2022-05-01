@@ -8,7 +8,6 @@ import logo from "../../assests/images/logo.png";
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import e from "cors";
 
 export const Signin = () => {
   const [formdata, setformdata] = React.useState({
@@ -28,7 +27,7 @@ export const Signin = () => {
     dispatch(reset());
   }, [user, isSuccess, navigate, dispatch]);
   const onChange = (e) => {
-    e.target.type == "checkbox"
+    e.target.type === "checkbox"
       ? setformdata((prevState) => ({
           ...prevState,
           [e.target.name]: e.target.checked,
@@ -102,7 +101,12 @@ export const Signin = () => {
               />
             </Box>
             <div className={classes.containerStayLoged}>
-              <input type='checkbox' name='staySignin' onChange={onChange} />
+              <input
+                className={classes.checkboxloged}
+                type='checkbox'
+                name='staySignin'
+                onChange={onChange}
+              />
               <p className={classes.stayLoged}> Stay signed in</p>
             </div>
             <button className={classes.signinBtn} type='submit'>
@@ -119,7 +123,11 @@ export const Signin = () => {
         </div>
       </div>
       <div className={classes.logoSide}>
-        <img src={logo} alt='logo brand' />
+        <img
+          src={logo}
+          style={{ width: "50vw", maxWidth: "500px" }}
+          alt='logo brand'
+        />
       </div>
     </div>
   );

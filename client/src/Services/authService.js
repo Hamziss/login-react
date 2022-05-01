@@ -17,7 +17,7 @@ const register = async (userData) => {
 
 //service for login
 const login = async (userData, loged) => {
-    console.log(loged)
+
     const response = await axios.post(API_URL_login, userData).catch((err) => { toast.error(err.response.data) })
 
     if (response.data && loged) {

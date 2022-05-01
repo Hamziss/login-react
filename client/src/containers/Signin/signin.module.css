@@ -86,3 +86,17 @@ p.parsignin {
 .stayLoged {
     margin-left: 8px;
 }
+
+.checkboxloged {
+    cursor: pointer;
+}
+
+@media (max-width:768px) {
+    .wrapper {
+        flex-direction: column-reverse;
+    }
+    .logoSide,
+    .formSide {
+        width: 100%;
+    }
+}

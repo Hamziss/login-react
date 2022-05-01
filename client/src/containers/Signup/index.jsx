@@ -159,7 +159,11 @@ export const Signup = () => {
           </div>
         </div>
         <div className={classes.logoSide}>
-          <img src={logo} alt='logo brand' />
+          <img
+            src={logo}
+            style={{ width: "45vw", maxWidth: "500px" }}
+            alt='logo brand'
+          />
         </div>
       </div>
     </>
