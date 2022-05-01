@@ -13,8 +13,10 @@ router.post("/", async(req, res) => {
         password: Joi.string().min(6).max(200).required()
 
     })
-    const { error } = schema.validate(req.body)
-    if (error) return res.status(400).send(error.details[0].message)
+    const { error } = schema.validate(req.body, { abortEarly: false })
+    var messages = [];
+    error.details.forEach((error) => messages.push(error.message));
+    if (error) return res.status(400).send(messages)
     try {
         let user = await User.findOne({ email: req.body.email })
         if (user) return res.status(400).send("User with that email already exist")
