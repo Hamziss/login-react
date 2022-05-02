@@ -19,8 +19,7 @@ const register = async(userData) => {
 
 //service for login
 const login = async(userData, loged) => {
-
-        const response = await axios.post(API_URL_login, userData).catch((err) => { toast.error(err.response.data) })
+        const response = await axios.post(API_URL_login, userData).catch((err) => { err.response.data.forEach((item) => toast.error(item)) })
 
         if (response.data && loged) {
             localStorage.setItem('user', JSON.stringify(response.data))

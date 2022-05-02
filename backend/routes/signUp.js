@@ -6,7 +6,7 @@ const { User } = require("../models/user")
 
 const router = express.Router()
 
-router.post("/", async(req, res) => {
+router.post("/", async (req, res) => {
     const schema = Joi.object({
         name: Joi.string().min(3).max(30).required(),
         email: Joi.string().min(3).max(200).email().required(),
@@ -15,7 +15,7 @@ router.post("/", async(req, res) => {
     })
     const { error } = schema.validate(req.body, { abortEarly: false })
     var messages = [];
-    error.details.forEach((error) => messages.push(error.message));
+    error?.details.forEach((error) => messages.push(error.message));
     if (error) return res.status(400).send(messages)
     try {
         let user = await User.findOne({ email: req.body.email })

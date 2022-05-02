@@ -6,13 +6,15 @@ const { User } = require("../models/user")
 
 const router = express.Router()
 
-router.post("/", async(req, res) => {
+router.post("/", async (req, res) => {
     const schema = Joi.object({
         email: Joi.string().min(3).max(200).email().required(),
         password: Joi.string().min(6).max(200).required()
     })
     const { error } = schema.validate(req.body)
-    if (error) return res.status(400).send(error.details[0].message)
+    var messages = [];
+    error?.details.forEach((error) => messages.push(error.message));
+    if (error) return res.status(400).send(messages)
     try {
         let user = await User.findOne({ email: req.body.email })
         if (!user) return res.status(400).send("Invalid email or password...");
@@ -24,7 +26,7 @@ router.post("/", async(req, res) => {
         const secret_key = process.env.SECRET_KEY
 
 
-        const token = jwt.sign({ _id: user._id, name: user.name, email: user.email }, secret_key)
+    const token = jwt.sign({ _id: user._id, name: user.name, email: user.email }, secret_key)
         res.send(token)
 
 
