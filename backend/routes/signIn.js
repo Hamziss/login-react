@@ -17,11 +17,11 @@ router.post("/", async (req, res) => {
     if (error) return res.status(400).send(messages)
     try {
         let user = await User.findOne({ email: req.body.email })
-        if (!user) return res.status(400).send("Invalid email or password...");
+        if (!user) return res.status(400).send(["Invalid email or password..."]);
 
         const validpassword = await bcrypt.compare(req.body.password, user.password)
         if (!validpassword)
-            return res.status(400).send("Invalid email or password...");
+            return res.status(400).send(["Invalid email or password..."]);
 
         const secret_key = process.env.SECRET_KEY
 
