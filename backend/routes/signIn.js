@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
         email: Joi.string().min(3).max(200).email().required(),
         password: Joi.string().min(6).max(200).required()
     })
-    const { error } = schema.validate(req.body)
+    const { error } = schema.validate(req.body,{ abortEarly: false })
     var messages = [];
     error?.details.forEach((error) => messages.push(error.message));
     if (error) return res.status(400).send(messages)
