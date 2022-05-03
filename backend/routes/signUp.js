@@ -21,12 +21,12 @@ router.post("/", async (req, res) => {
         let user = await User.findOne({ email: req.body.email })
         if (user) return res.status(400).send(["User with that email already exist"])
         const { name, email, password } = req.body
+        const role = "guest"
 
-
-        user = new User({ name, email, password })
+        user = new User({ name, email, password,role })
         const salt = await bcrypt.genSalt(10)
         user.password = await bcrypt.hash(user.password, salt)
-
+        
         await user.save()
 
 

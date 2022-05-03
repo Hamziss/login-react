@@ -5,6 +5,7 @@ const cors = require("cors")
 
 const signUp = require("./routes/signUp")
 const signIn = require("./routes/signIn")
+const addAdmin = require("./routes/addAdmin")
 const connectDB = require("./config/db")
 const port = process.env.PORT || 5000
 
@@ -19,6 +20,7 @@ app.use(express.json())
 
 app.use("/api/signup", signUp)
 app.use("/api/signin", signIn)
+app.use("/api/admin/add", addAdmin)
 
 app.get("/", (req, res) => {
     res.send("API is working")

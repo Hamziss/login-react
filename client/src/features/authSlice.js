@@ -3,16 +3,17 @@ import authService from '../Services/authService'
 // TODO: learn about createAsyncThunk
 
 const user = JSON.parse(localStorage.getItem('user'))
+const admin = localStorage.getItem('isAdmin')
 const initialState = {
     user: user ? user : null,
     isSuccess: false,
     isLoading: false,
-    isAdmin: false,
+    isAdmin: admin === "true" ? true : false,
 
 }
 
 //register user
-export const register = createAsyncThunk('auth/register', async(user, thunkAPI) => {
+export const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
 
     try {
         return await authService.register(user)
@@ -24,23 +25,23 @@ export const register = createAsyncThunk('auth/register', async(user, thunkAPI) 
 })
 
 //login user
-export const login = createAsyncThunk('auth/login', async(data, thunkAPI) => {
-        const { email, password } = data;
-        const { staySignin } = data;
-        const user = { email, password }
+export const login = createAsyncThunk('auth/login', async (data, thunkAPI) => {
+    const { email, password } = data;
+    const { staySignin } = data;
+    const user = { email, password }
 
 
-        try {
+    try {
 
-            return await authService.login(user, staySignin)
-        } catch (error) {
-            const message = (error.response && error.response.data &&
-                error.response.data.message) || error.message || error.toString()
-            return thunkAPI.rejectWithValue(message)
-        }
-    })
-    // logout
-export const logout = createAsyncThunk("auth/logout", async() => {
+        return await authService.login(user, staySignin)
+    } catch (error) {
+        const message = (error.response && error.response.data &&
+            error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+// logout
+export const logout = createAsyncThunk("auth/logout", async () => {
     await authService.logout()
 })
 export const authSlice = createSlice({
@@ -50,7 +51,6 @@ export const authSlice = createSlice({
         reset: (state) => {
             state.isLoading = false
             state.isAdmin = false
-
             state.isSuccess = false
         }
     },
@@ -74,6 +74,7 @@ export const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
+
                 state.user = action.payload
             })
             .addCase(login.rejected, (state, action) => {
@@ -83,6 +84,7 @@ export const authSlice = createSlice({
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null
+                state.isAdmin = false
 
             })
     }
