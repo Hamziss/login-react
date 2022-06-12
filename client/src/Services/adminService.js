@@ -1,7 +1,7 @@
 import axios from "axios"
 import { toast } from "react-toastify";
 
-const API_URL_addadmin = "http://localhost:5000/api/admin/add"
+const API_URL_addadmin = "/api/admin/add"
 
 
 

@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-const API_URL_signup = 'http://localhost:5000/api/signup'
-const API_URL_login = 'http://localhost:5000/api/signin'
+const API_URL_signup = '/api/signup'
+const API_URL_login = '/api/signin'
 //service for signup
 const register = async (userData) => {
     const response = await axios.post(API_URL_signup, userData).catch((err) => {
